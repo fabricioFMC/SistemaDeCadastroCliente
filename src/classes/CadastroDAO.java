@@ -20,8 +20,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 
 public class CadastroDAO 
@@ -31,9 +29,9 @@ public class CadastroDAO
     PreparedStatement st;
     ResultSet rs;
     
-    public String       url =       "jdbc:mysql://localhost:3306/cadastro"; //Nome da base de dados
-    public String       user =      "root";                                 //nome do usuário do MySQL
-    public String       password =  "1234";                                 //senha do MySQL
+    public String       url =       "jdbc:mysql://localhost:3306/cadastrocliente"; //Nome da base de dados
+    public String       user =      "root";                                        //nome do usuário do MySQL
+    public String       password =  "1234";                                        //senha do MySQL
 
     public boolean conectar()
     {
@@ -92,7 +90,7 @@ public class CadastroDAO
                 cadastro.setNome(rs.getString("nome"));
                 cadastro.setSobrenome(rs.getString("sobrenome"));
                 cadastro.setTelefone(rs.getString("telefone"));
-                cadastro.setTelefone(rs.getString("telefone"));
+                cadastro.setEndereco(rs.getString("endereco"));
                 
                 return cadastro;
             }
@@ -199,19 +197,15 @@ public class CadastroDAO
             return null;
         }
     }
-    
-    /*
-    public List<Cadastro> getCadastro2(String categoria) 
-    {
-        
-        String sql = "SELECT * FROM cenaflix.cadastro WHERE categoria LIKE ?";
+      
+    public List<Cadastro> getCadastro2(int id) 
+    {   
+        String sql = "SELECT * FROM cadastro WHERE id = ?";
         
         try 
         {
-            PreparedStatement stmt = this.conn.prepareStatement(sql);
-            
-            stmt.setString(1,"%" + categoria + "%");
-            
+            PreparedStatement stmt = this.conn.prepareStatement(sql);       
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             
             List<Cadastro> listaCadastro = new ArrayList<>();
@@ -222,9 +216,11 @@ public class CadastroDAO
                 Cadastro cadastro = new Cadastro();
                 
                 cadastro.setId(rs.getInt("id"));
+                cadastro.setCpf(rs.getString("cpf"));
                 cadastro.setNome(rs.getString("nome"));
-                cadastro.setData(rs.getString("dataLancamento"));
-                cadastro.setCategoria(rs.getString("categoria"));
+                cadastro.setSobrenome(rs.getString("sobrenome"));
+                cadastro.setTelefone(rs.getString("telefone"));
+                cadastro.setEndereco(rs.getString("endereco"));
                 
                 listaCadastro.add(cadastro);
             }
@@ -237,7 +233,4 @@ public class CadastroDAO
             return null;
         }
     }
-    
-    */
-    
 }
