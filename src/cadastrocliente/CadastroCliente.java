@@ -1,8 +1,16 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+Atividade 03:
+
+Projetista: Fabricio Ramos Malvar Cabral CPF 025.885.415-42
+
+Versão: 1.0     Data: 06/12/2025
+
+# Objetivo: 
+    1. Carregar a primeira tela.
+*/
 package cadastrocliente;
+
+import view.TelaLogin;
 
 /**
  *
@@ -14,7 +22,8 @@ public class CadastroCliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TelaLogin  tLogin = new TelaLogin();
+        tLogin.setVisible(true);
     }
     
 }
