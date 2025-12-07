@@ -6,6 +6,7 @@ package view;
 
 import classes.Cadastro;
 import classes.CadastroDAO;
+import classes.ConversaoNumero;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -74,7 +75,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         {
             int id;
             
-            id = Integer.parseInt(txtAtualizarId.getText());
+            id = Integer.parseInt(txtPesquisarId.getText());
             
             List<Cadastro> listaCadastro = dao.getCadastro2(id);
         
@@ -117,6 +118,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         initComponents();
         
         preencherTabela();
+        txtId.setEnabled(false);
     }
 
     /**
@@ -140,15 +142,17 @@ public class TelaCadastro extends javax.swing.JFrame {
         txtEndereco = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
+        jLayeredPane5 = new javax.swing.JLayeredPane();
+        txtPesquisarId = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        btnPesquisar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        btnAtualizar1 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         txtExcluirId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLayeredPane5 = new javax.swing.JLayeredPane();
-        txtAtualizarId = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        btnAtualizar = new javax.swing.JButton();
-        btnAtualizar2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -170,6 +174,16 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel2.setText("Sobre Nome:");
 
         txtTelefone.setToolTipText("xx-xxxxx-xxxx");
+        txtTelefone.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTelefoneCaretUpdate(evt);
+            }
+        });
+        txtTelefone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTelefoneFocusLost(evt);
+            }
+        });
         txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefoneActionPerformed(evt);
@@ -179,6 +193,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel3.setText("Telefone");
 
         txtCpf.setToolTipText("xxx.xxx.xxx-xx");
+        txtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCpfFocusLost(evt);
+            }
+        });
         txtCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCpfActionPerformed(evt);
@@ -195,6 +214,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabel6.setText("Endereço:");
 
+        btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,14 +222,72 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        jLayeredPane5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtPesquisarId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesquisarIdActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("ID");
+
+        btnPesquisar.setBackground(new java.awt.Color(0, 255, 51));
+        btnPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane5.setLayer(txtPesquisarId, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
+        jLayeredPane5.setLayout(jLayeredPane5Layout);
+        jLayeredPane5Layout.setHorizontalGroup(
+            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(txtPesquisarId, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jLayeredPane5Layout.setVerticalGroup(
+            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane5Layout.createSequentialGroup()
+                .addComponent(jLabel10)
+                .addGap(2, 2, 2)
+                .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPesquisarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("ID:");
+
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnAtualizar1.setBackground(new java.awt.Color(255, 0, 0));
-        btnAtualizar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAtualizar1.setText("Excluir");
-        btnAtualizar1.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setBackground(new java.awt.Color(255, 0, 0));
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizar1ActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
 
@@ -221,7 +299,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabel4.setText("ID");
 
-        jLayeredPane2.setLayer(btnAtualizar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(txtExcluirId, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -231,7 +309,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -241,64 +319,14 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAtualizar1)
+                    .addComponent(btnExcluir)
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(2, 2, 2)
                         .addComponent(txtExcluirId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
-
-        jLayeredPane5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        txtAtualizarId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAtualizarIdActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setText("ID");
-
-        btnAtualizar.setBackground(new java.awt.Color(0, 255, 51));
-        btnAtualizar.setText("Pesquisar");
-        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarActionPerformed(evt);
-            }
-        });
-
-        jLayeredPane5.setLayer(txtAtualizarId, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(btnAtualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
-        jLayeredPane5.setLayout(jLayeredPane5Layout);
-        jLayeredPane5Layout.setHorizontalGroup(
-            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(txtAtualizarId, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jLayeredPane5Layout.setVerticalGroup(
-            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10)
-                .addGap(2, 2, 2)
-                .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAtualizarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtualizar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnAtualizar2.setText("Atualizar");
 
         jLayeredPane1.setLayer(txtNome, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -311,9 +339,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLayeredPane1.setLayer(txtEndereco, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLayeredPane5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnAtualizar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnAtualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(txtId, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -323,54 +353,64 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(txtCpf)
+                                .addContainerGap())))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEndereco)
                             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(21, 21, 21)
+                                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1)
                                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addGap(21, 21, 21)
                                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(0, 146, Short.MAX_VALUE))
                                     .addComponent(txtSobrenome)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jLayeredPane1Layout.createSequentialGroup()
-                                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtCpf)))
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jLayeredPane1Layout.createSequentialGroup()
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
                                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnAtualizar2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                                     .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLayeredPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(44, 44, 44))))
+                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(2, 2, 2)
-                        .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(2, 2, 2)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(2, 2, 2)
+                                .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(2, 2, 2)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
@@ -388,15 +428,15 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(btnAtualizar2)
+                        .addComponent(btnAtualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLayeredPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLayeredPane2))
-                        .addGap(0, 8, Short.MAX_VALUE))))
+                            .addComponent(jLayeredPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLayeredPane5, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         txtTelefone.getAccessibleContext().setAccessibleName("Telefone");
@@ -444,32 +484,31 @@ public class TelaCadastro extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel8))
-                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLayeredPane3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel7)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel8))
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLayeredPane3))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(140, 140, 140))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -554,7 +593,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,"Dados incluidos com sucesso");
                 
                         //limpando os campos
-                        txtAtualizarId.setText("");
+                        txtId.setText("");
+                        txtPesquisarId.setText("");
                         txtExcluirId.setText("");
                         txtCpf.setText("");
                         txtNome.setText("");
@@ -574,9 +614,9 @@ public class TelaCadastro extends javax.swing.JFrame {
                     }
                     else
                     {
-                    
-                    }
                         JOptionPane.showMessageDialog(null,"Erro ao tentar inserir dados.");
+                    }
+                        
                 }            
                 catch (NumberFormatException exc)
                 {
@@ -594,17 +634,233 @@ public class TelaCadastro extends javax.swing.JFrame {
              
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void txtAtualizarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAtualizarIdActionPerformed
+    private void txtPesquisarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAtualizarIdActionPerformed
+    }//GEN-LAST:event_txtPesquisarIdActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+       
+        if(txtPesquisarId.getText().isEmpty())
+        {
+                JOptionPane.showMessageDialog(null,"O campo PESQUISAR em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+        }
+        else
+        {
+        
+            int id;
+
+            id = Integer.parseInt(txtPesquisarId.getText());
+        
+            CadastroDAO dao = new CadastroDAO();
+        
+            boolean status = dao.conectar();
+    
+            if(status == true)
+            {
+                Cadastro cadastro = dao.consultarId(id);
+                if(cadastro == null)
+                {
+                    JOptionPane.showMessageDialog(null,"Cliente não localizado.");
+                }
+                else
+                {
+                    txtId.setText(String.valueOf(cadastro.getId()));
+                    txtCpf.setText(cadastro.getCpf());
+                    txtNome.setText(cadastro.getNome());
+                    txtSobrenome.setText(cadastro.getSobrenome());
+                    txtTelefone.setText(cadastro.getTelefone());
+                    txtEndereco.setText(cadastro.getEndereco());
+                
+                    //limpar os campos
+                    txtPesquisarId.setText("");
+                              
+                    limparDadosTabela();
+                    preencherTabela();
+                }
+
+                dao.desconectar();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Erro de conexão");
+            }
+        }    
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+        if(txtExcluirId.getText().isEmpty())
+        {
+                JOptionPane.showMessageDialog(null,"O campo EXCLUIR em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+        }
+        else
+        {
+            CadastroDAO dao = new CadastroDAO();
+            boolean status = dao.conectar();
+        
+            if(status == false)
+            {
+                JOptionPane.showMessageDialog(null,"Erro de conexão.");
+            }
+            else
+            {
+                status = dao.excluir(Integer.parseInt(txtExcluirId.getText()));
+                if(status ==true)
+                {
+                    JOptionPane.showMessageDialog(null,"Cliente excluído com sucesso!");
+                
+                    //limpando os campos
+                    txtId.setText("");
+                    txtPesquisarId.setText("");
+                    txtExcluirId.setText("");
+                    txtCpf.setText("");
+                    txtNome.setText("");
+                    txtSobrenome.setText("");
+                    txtTelefone.setText("");
+                    txtEndereco.setText("");
+
+                    //posicionar o cursor para um próximo
+                    txtNome.requestFocus();
+                    //desabilitar botão de exclusão
+                    //btnExcluir.setEnabled(false);
+                
+                    limparDadosTabela();
+                    preencherTabela();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Erro na exclusão do cliente!");
+                }
+                dao.desconectar();
+            }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+       
+         if(txtId.getText().isEmpty())
+        {
+                JOptionPane.showMessageDialog(null,"O campo ID em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+        }
+        else
+        {
+            Cadastro cadastro = new Cadastro();
+            CadastroDAO dao =  new CadastroDAO();
+
+            boolean status;
+            int resposta;
+        
+            cadastro.setId(Integer.parseInt(txtId.getText()));
+            cadastro.setCpf(txtCpf.getText());
+            cadastro.setNome(txtNome.getText());
+            cadastro.setSobrenome(txtSobrenome.getText());
+            cadastro.setTelefone(txtTelefone.getText());
+            cadastro.setEndereco(txtEndereco.getText());
+
+            status = dao.conectar();
+            // Verificando os campos em branco.
+            if(txtCpf.getText().isEmpty() && txtNome.getText().isEmpty() && txtSobrenome.getText().isEmpty() && txtTelefone.getText().isEmpty() && txtEndereco.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"Todos os campos estão em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else if(txtCpf.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"O campo CPF em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else if(txtNome.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"O campo NOME em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else if(txtSobrenome.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"O campo SOBRENOME em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else if(txtTelefone.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"O campo TELEFONE em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else if(txtEndereco.getText().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null,"O campo ENDEREÇO em branco.", "AVISO",JOptionPane.WARNING_MESSAGE );
+            }
+            else
+            {
+                if(status == false)
+                {
+                    JOptionPane.showMessageDialog(null,"Erro de conexão.");
+                }
+                else
+                {
+                    try
+                    {
+                        resposta = dao.atualizar(cadastro);
+                       
+                        if (resposta == 1)
+                        {
+                            JOptionPane.showMessageDialog(null,"Dados incluidos com sucesso");
+                
+                            //limpando os campos
+                            txtId.setText("");
+                            txtPesquisarId.setText("");
+                            txtExcluirId.setText("");
+                            txtCpf.setText("");
+                            txtNome.setText("");
+                            txtSobrenome.setText("");
+                            txtTelefone.setText("");
+                            txtEndereco.setText("");
+		
+                            //posicionar o cursor para um próximo
+                            txtNome.requestFocus();
+                
+                            limparDadosTabela();
+                            preencherTabela();
+                        }
+                        else if (resposta == 1062)
+                        {
+                            JOptionPane.showMessageDialog(null,"Cliente cadastrado com sucesso.");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"Erro ao tentar inserir dados.");
+                        }
+                        
+                    }            
+                    catch (NumberFormatException exc)
+                    {
+                        JOptionPane.showMessageDialog(null, "ERRO - O número está no formato errado.\n\n"
+                        + "VERIFIQUE OS CAMPOS:\n\n"
+                        + "1. TELEFONE: xx-xxxxx-xxxx"
+                        + "\n2. CPF: xxx.xxx.xxx-xx", "ERRO", JOptionPane.WARNING_MESSAGE);
+                    }
+                
+                    dao.desconectar();
+                }
+            }
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void btnAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizar1ActionPerformed
+    private void txtTelefoneCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTelefoneCaretUpdate
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAtualizar1ActionPerformed
+    }//GEN-LAST:event_txtTelefoneCaretUpdate
+
+    private void txtTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefoneFocusLost
+        String telefone;
+        ConversaoNumero conversao = new ConversaoNumero();
+
+        telefone = txtTelefone.getText();
+        conversao.conversaoTelefone(telefone);
+        txtTelefone.setText(conversao.getTelefone());
+    }//GEN-LAST:event_txtTelefoneFocusLost
+
+    private void txtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusLost
+              
+        String cpf;
+        ConversaoNumero conversao = new ConversaoNumero();
+
+        cpf = txtCpf.getText();
+        conversao.conversaoCpf(cpf);
+        txtCpf.setText(conversao.getCpf());
+    }//GEN-LAST:event_txtCpfFocusLost
 
     /**
      * @param args the command line arguments
@@ -643,8 +899,8 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnAtualizar1;
-    private javax.swing.JButton btnAtualizar2;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -655,17 +911,19 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCliente;
-    private javax.swing.JTextField txtAtualizarId;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtExcluirId;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtPesquisarId;
     private javax.swing.JTextField txtSobrenome;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
